@@ -20,15 +20,11 @@
 
 			// setup recognition
 			recognition.onresult = function (event) {
-				console.log('currentId', currentId);
-
 				if (!currentId) return;
-
 				let current = event.resultIndex;
 				let transcript = event.results[current][0].transcript;
 
 				messages.set(currentId, { question: transcript, answer: '' });
-				console.log(transcript);
 			};
 
 			recognition.onend = function () {
@@ -37,8 +33,6 @@
 				}
 
 				messages = messages;
-
-				console.log('messList', messageList);
 				currentId = '';
 			};
 		} catch (e: unknown) {
@@ -71,6 +65,7 @@
 		messages = messages;
 
 		context = '';
+		currentId = ''
 	}
 
 	let error;
