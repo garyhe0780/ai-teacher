@@ -30,6 +30,7 @@
 
 			recognition.onend = function () {
 				console.log('currentId', currentId);
+				console.log(messages.get(currentId)?.question);
 				if (!currentId) {
 					interactiveWithChatGPT(messages.get(currentId)?.question as string);
 				}
