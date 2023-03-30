@@ -15,6 +15,7 @@
 		try {
 			let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 			recognition = new SpeechRecognition();
+			recognition.lang = 'en-US';
 			support = true;
 
 			// setup recognition
@@ -29,9 +30,7 @@
 			};
 
 			recognition.onend = function () {
-				console.log('currentId', currentId);
-				console.log(messages.get(currentId)?.question);
-				if (!currentId) {
+				if (currentId) {
 					interactiveWithChatGPT(messages.get(currentId)?.question as string);
 				}
 
