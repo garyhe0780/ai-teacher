@@ -116,9 +116,10 @@
 </script>
 
 {#if support}
-	<div class="flex flex-col">
+	<div class="flex flex-col gap-2">
 		{#each messageList as m}
 			<div>{m.question}</div>
+			<div>{m.answer}</div>
 		{/each}
 	</div>
 	<div class="fixed bottom-0 left-0 right-0 h-[4.5rem] flex items-center px-4 gap-4">
