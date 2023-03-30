@@ -2,13 +2,13 @@
 	import type { CreateCompletionResponse } from 'openai';
 	import { onMount } from 'svelte';
 	import { nanoid } from 'nanoid';
-	import { SSE } from 'sse.js'
+	import { SSE } from 'sse.js';
 
 	let recognition: SpeechRecognition | null;
 	let support: boolean = true;
 	let messages = new Map<string, { question: string; answer: string }>();
 	let currentId: string;
-	let context:string;
+	let context: string;
 
 	onMount(() => {
 		try {
@@ -27,7 +27,11 @@
 				console.log(transcript);
 			};
 
-			recognition.onend = function (event) {
+			recognition.onend = function () {
+				if (!currentId) {
+					interactiveWithChatGPT(messages.get(currentId)?.question as string);
+				}
+
 				messages = messages;
 				currentId = '';
 			};
@@ -44,7 +48,6 @@
 	function onVoiceBtnTap() {
 		recognition?.start();
 
-
 		currentId = nanoid(7);
 
 		setTimeout(() => {
@@ -53,15 +56,13 @@
 	}
 
 	async function onSendBtnTap() {
-		currentId = nanoid(7)
-		messages.set(currentId, { question: context, answer: ''});
+		currentId = nanoid(7);
+		messages.set(currentId, { question: context, answer: '' });
 
-
-		interactiveWithChatGPT(context)
+		interactiveWithChatGPT(context);
 		messages = messages;
 
 		context = '';
-
 	}
 
 	let error;
@@ -73,47 +74,53 @@
 				'Content-Type': 'application/json'
 			},
 			payload: JSON.stringify({ context })
-		})
+		});
 
 		eventSource.addEventListener('error', (e: any) => {
-			error = true
-			loading = false
-		})
+			error = true;
+			loading = false;
+		});
 
 		eventSource.addEventListener('message', (e: any) => {
 			try {
-				loading = false
+				loading = false;
 
 				if (e.data === '[DONE]') {
 					answer = '';
-					return
+					return;
 				}
 
-				const completionResponse: CreateCompletionResponse = JSON.parse(e.data)
+				const completionResponse: CreateCompletionResponse = JSON.parse(e.data);
 
-				const [{ text }] = completionResponse.choices
-				answer = (answer ?? '') + text
+				const [{ text }] = completionResponse.choices;
+				answer = (answer ?? '') + text;
 				messages.set(currentId, {
 					...(messages.get(currentId) as any),
 					answer
-				})
+				});
 
 				// for reactive purpose
-				messages = messages
+				messages = messages;
 			} catch (err) {
-				error = true
-				loading = false
-				console.error(err)
+				error = true;
+				loading = false;
+				console.error(err);
 			}
-		})
+		});
 
-		eventSource.stream()
+		eventSource.stream();
+	}
+
+	function onKeyPressed(event: KeyboardEvent) {
+		if (event.key === 'Enter' && context) interactiveWithChatGPT(context);
 	}
 
 	$: messageList = Array.from(messages, (entry) => {
 		return entry[1];
 	});
 </script>
+
+<svelte:window on:keypress={onKeyPressed} />
 
 {#if support}
 	<div class="flex flex-col gap-2 p-2.5">
