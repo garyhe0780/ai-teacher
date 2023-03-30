@@ -33,7 +33,7 @@
 
 			recognition.onend = function () {
 				if (currentId) {
-					interactiveWithChatGPT(messages.get(currentId)?.question as string);
+					interactiveWithChatGPT(messages.get(currentId)?.question as string ,currentId);
 				}
 
 				messages = messages;
@@ -67,7 +67,7 @@
 		currentId = nanoid(7);
 		messages.set(currentId, { question: context, answer: '' });
 
-		interactiveWithChatGPT(context);
+		interactiveWithChatGPT(context, currentId);
 		messages = messages;
 
 		context = '';
@@ -76,7 +76,7 @@
 	let error;
 	let loading;
 	let answer: string;
-	function interactiveWithChatGPT(context: string) {
+	function interactiveWithChatGPT(context: string, currentId: string) {
 		const eventSource = new SSE('/api/explain', {
 			headers: {
 				'Content-Type': 'application/json'
