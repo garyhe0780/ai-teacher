@@ -37,6 +37,8 @@
 				}
 
 				messages = messages;
+
+				console.log('messList', messageList);
 				currentId = '';
 			};
 		} catch (e: unknown) {
