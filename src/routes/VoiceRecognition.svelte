@@ -20,6 +20,8 @@
 
 			// setup recognition
 			recognition.onresult = function (event) {
+				console.log('currentId', currentId);
+
 				if (!currentId) return;
 
 				let current = event.resultIndex;

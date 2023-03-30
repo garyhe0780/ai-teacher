@@ -2,3 +2,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes alternating-colors {
+	0% {
+		color: black;
+		background-color: white;
+	}
+
+	50% {
+		color: black;
+		background-color: white;
+	}
+}
+
+.cursor {
+	animation: alternating-colors 2s steps(1, jump-end) infinite;
+}
