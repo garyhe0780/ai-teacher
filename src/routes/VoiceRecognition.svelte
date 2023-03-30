@@ -5,7 +5,7 @@
 	import { SSE } from 'sse.js'
 
 	let recognition: SpeechRecognition | null;
-	let support: boolean = false;
+	let support: boolean = true;
 	let messages = new Map<string, { question: string; answer: string }>();
 	let currentId: string;
 	let context:string;
@@ -116,10 +116,16 @@
 </script>
 
 {#if support}
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-2 p-2.5">
 		{#each messageList as m}
-			<div>{m.question}</div>
-			<div>{m.answer}</div>
+			<div class="flex flex-col gap-2">
+				<div class="flex">
+					<div class="px-3 py-1.5 rounded-lg border border-gray-200 bg-gray-200">{m.question}</div>
+				</div>
+				<div class="flex justify-end">
+					<div class="px-3 py-1.5 rounded-lg border border-gray-300">{m.answer}</div>
+				</div>
+			</div>
 		{/each}
 	</div>
 	<div class="fixed bottom-0 left-0 right-0 h-[4.5rem] flex items-center px-4 gap-4">
