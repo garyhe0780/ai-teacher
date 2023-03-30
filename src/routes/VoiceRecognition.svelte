@@ -112,7 +112,7 @@
 	}
 
 	function onKeyPressed(event: KeyboardEvent) {
-		if (event.key === 'Enter' && context) interactiveWithChatGPT(context);
+		if (event.key === 'Enter' && context) onSendBtnTap();
 	}
 
 	$: messageList = Array.from(messages, (entry) => {
