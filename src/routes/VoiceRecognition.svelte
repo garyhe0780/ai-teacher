@@ -53,7 +53,8 @@
 	}
 
 	async function onSendBtnTap() {
-		messages.set(nanoid(7), { question: context, answer: ''});
+		currentId = nanoid(7)
+		messages.set(currentId, { question: context, answer: ''});
 
 
 		interactiveWithChatGPT(context)
