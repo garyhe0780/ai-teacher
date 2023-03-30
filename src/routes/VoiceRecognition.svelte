@@ -123,7 +123,7 @@
 <svelte:window on:keypress={onKeyPressed} />
 
 {#if support}
-	<div class="flex flex-col gap-2 p-2.5">
+	<div class="flex flex-col gap-2 p-2.5 mb-[4.7rem]">
 		{#each messageList as m}
 			<div class="flex flex-col gap-2">
 				<div class="flex justify-end ml-3.5">

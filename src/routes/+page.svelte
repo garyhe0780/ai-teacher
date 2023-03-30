@@ -4,9 +4,5 @@
 
 
 <main>
-  <div>
-    <div>
-      <VoiceRecognition />
-    </div>
-  </div>
+  <VoiceRecognition />
 </main>
