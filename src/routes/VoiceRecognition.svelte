@@ -65,8 +65,7 @@
 
 	let error;
 	let loading;
-	let answer = '';
-
+	let answer: string;
 	function interactiveWithChatGPT(context: string) {
 		const eventSource = new SSE('/api/explain', {
 			headers: {
@@ -92,6 +91,7 @@
 
 				const [{ text }] = completionResponse.choices
 				answer = (answer ?? '') + text
+				console.log(answer);
 				messages.set(currentId, {
 					...(messages.get(currentId) as any),
 					answer
