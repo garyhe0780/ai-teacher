@@ -85,6 +85,7 @@
 				loading = false
 
 				if (e.data === '[DONE]') {
+					answer = '';
 					return
 				}
 
@@ -92,7 +93,6 @@
 
 				const [{ text }] = completionResponse.choices
 				answer = (answer ?? '') + text
-				console.log(answer);
 				messages.set(currentId, {
 					...(messages.get(currentId) as any),
 					answer
