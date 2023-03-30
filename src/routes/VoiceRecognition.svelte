@@ -29,6 +29,7 @@
 			};
 
 			recognition.onend = function () {
+				console.log('currentId', currentId);
 				if (!currentId) {
 					interactiveWithChatGPT(messages.get(currentId)?.question as string);
 				}
@@ -51,6 +52,11 @@
 		recognition?.start();
 
 		currentId = nanoid(7);
+	}
+
+	function onStopRecordingBtnTap() {
+		recording = false;
+		recognition?.stop();
 	}
 
 	async function onSendBtnTap() {
@@ -113,11 +119,6 @@
 		if (event.key === 'Enter' && context) onSendBtnTap();
 	}
 
-	function onStopRecordingBtnTap() {
-		recording = false;
-		recognition?.stop();
-	}
-
 	$: messageList = Array.from(messages, (entry) => {
 		return entry[1];
 	});
@@ -140,7 +141,7 @@
 	</div>
 	{#if recording}
 		<div
-			class="fixed bottom-0 left-0 right-0 flex flex-col items-center p-8 gap-4 border-t border-gray-200 shadow-t-sm"
+			class="bg-white fixed bottom-0 left-0 right-0 flex flex-col items-center p-8 gap-4 border-t border-gray-200 shadow-t-sm"
 		>
 			<div class="waveform">
 				<span />
