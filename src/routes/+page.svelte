@@ -2,7 +2,7 @@
 	import VoiceRecognition from "./VoiceRecognition.svelte"
 	import Welcome from "./Welcome.svelte";
 
-	let welcoming = false;
+	let welcoming = true;
 </script>
 
 
