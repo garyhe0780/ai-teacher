@@ -2,7 +2,7 @@ import { OPENAI_KEY } from '$env/static/private';
 import { oneLine, stripIndent } from 'common-tags';
 import type { RequestHandler } from './$types';
 import type { CreateCompletionRequest } from 'openai';
-import { error, type Config } from '@sveltejs/kit';
+import { error, type Config, json } from '@sveltejs/kit';
 
 export const config: Config = {
 	runtime: 'edge'
@@ -57,7 +57,12 @@ export const POST: RequestHandler = async ({ request }) => {
 			throw new Error('Failed to create completion', err);
 		}
 
-		return new Response(response.body);
+		return json({
+			data: {
+				test: 'test'
+			}
+		});
+		//return new Response(response.body);
 	} catch (err) {
 		console.error(err);
 		throw error(500, 'An error occurred');
