@@ -57,12 +57,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			throw new Error('Failed to create completion', err);
 		}
 
-		return json({
-			data: {
-				test: 'test'
-			}
-		});
-		//return new Response(response.body);
+		return new Response(response.body);
 	} catch (err) {
 		console.error(err);
 		throw error(500, 'An error occurred');
